@@ -10,12 +10,9 @@ const state = [
 ];
 
 const getters = {
-  // Return a single article with the given id.
   find: (state, _, __, rootGetters) => id => {
-    // Swap ID referenes with the resolved author objects.
     return resolveRelations(state.byId[id], ["author"], rootGetters);
   },
-  // Return a list of articles in the order of `allIds`.
   list: (state, getters) => {
     return state.allIds.map(id => getters.find(id));
   }
@@ -42,7 +39,7 @@ const mutations = {
 
 export default {
   state,
-  // getters,
+  getters,
   actions,
   mutations
 };
