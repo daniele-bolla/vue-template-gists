@@ -9,11 +9,20 @@
           <slot name="preaddon"> </slot>
         </span>
       </div>
-      <select class="form__element" id="2mfa_method" name="2mfa_method">
-        <option selected>Choose...</option>
-        <option value="1">OnOneOneOneOneOneOne OneOnee</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+      <select
+        class="form__element"
+        id="2mfa_method"
+        name="2mfa_method"
+        :value="props.value"
+        @input="
+          listeners.input &&
+            listeners.input($event.target.selectedOptions[0].value)
+        "
+      >
+        <option value="">-</option>
+        <option v-for="item in props.Data" :key="item" :value="item">{{
+          item
+        }}</option>
       </select>
       <div v-if="postAddon" class="input-group-append input-group-addon">
         <span class="input-group-text">

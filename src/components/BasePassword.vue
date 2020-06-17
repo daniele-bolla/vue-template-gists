@@ -3,7 +3,6 @@
     :id="id"
     :value="value"
     :type="passwordType"
-    classes="form-control"
     :errors="errors"
     :name="name"
     :placeholder="placeholder"
@@ -12,9 +11,13 @@
     @input="newValue => $emit('input', newValue)"
   >
     <template slot="postaddon">
-      <a class="toggle-password" role="button" @click.prevent="togglePassword"
-        ><i class="fa fa-eye"></i
-      ></a>
+      <button
+        class="toggle-password"
+        role="button"
+        @click.prevent="togglePassword"
+      >
+        <i class="fa fa-eye"></i>
+      </button>
     </template>
   </base-input>
 </template>
