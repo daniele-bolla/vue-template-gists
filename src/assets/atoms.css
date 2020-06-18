@@ -5,7 +5,7 @@
   height: calc(100vh - 3em);
 }
 
-.center-content{
+.centered-content{
   display: flex;
   align-items: center;
   justify-content: center;

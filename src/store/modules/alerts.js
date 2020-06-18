@@ -10,12 +10,12 @@ const state = [
 ];
 
 const getters = {
-  find: (state, _, __, rootGetters) => id => {
-    return resolveRelations(state.byId[id], ["author"], rootGetters);
-  },
-  list: (state, getters) => {
-    return state.allIds.map(id => getters.find(id));
-  }
+  // find: (state, _, __, rootGetters) => id => {
+  //   return resolveRelations(state.byId[id], ["author"], rootGetters);
+  // },
+  // list: (state, getters) => {
+  //   return state.allIds.map(id => getters.find(id));
+  // }
 };
 
 const actions = {

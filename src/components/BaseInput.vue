@@ -1,45 +1,61 @@
-<template functional>
-  <div class="form__block">
-    <label for="lastname"
-      >Last Name
-      <span v-if="props.isRequired || props.isValid" class="icon-asterisk"
+<template>
+  <div>
+    <label :for="name"
+      >{{ label }}
+      <span
+        v-if="validation.isRequired && validation.isInvalid"
+        class="icon-asterisk"
         >*</span
       >
-      <span v-if="props.isRequired && props.isValid" class="icon-check"
+      <span
+        v-if="validation.isRequired && validation.isValid"
+        class="icon-check"
         >&check;</span
-      ></label
-    >
+      >
+    </label>
     <input
       class="form__element"
-      id="lastname"
-      v-model="formDataToValidate.lastname"
-      @change="isDirty('lastname')"
-      autocomplete="name"
-      maxlength="50"
-      type="text"
-      aria-described="describe-lastname"
-      :aria-invalid="props.isInvalid"
-      :aria-required="props.isRequired"
+      :type="type"
+      @blur="$emit('blur')"
+      @input="$emit('input', $event.target.value)"
+      :value="value"
+      :autocomplete="autocomplete"
+      id="name"
+      name="name"
+      :aria-described="`describe-${name}`"
+      :aria-invalid="validation.isInvalid"
+      :aria-required="validation.isRequired"
     />
-    <ul
-      class="alert alert--danger"
-      role="alert"
-      id="describe-lastname"
-      v-if="props.showErrors"
+    <base-alert
+      type="danger"
+      :id="`describe-${name}`"
+      v-if="validation.showErrors"
     >
-      <li v-for="(item, index) in props.errors" :key="index">
+      <li v-for="(item, index) in errors" :key="index">
         {{ item }}
       </li>
-    </ul>
+    </base-alert>
   </div>
 </template>
 
 <script>
+import BaseAlert from "@/components/BaseAlert.vue";
+
 export default {
   name: "BaseInput",
+  components: {
+    BaseAlert
+  },
   props: {
-    value: null,
+    value: {
+      type: [String],
+      default: ""
+    },
     label: {
+      type: String,
+      default: ""
+    },
+    type: {
       type: String,
       default: ""
     },
@@ -47,10 +63,28 @@ export default {
       type: String,
       default: ""
     },
-    ariaDescription: {
+    autocomplete: {
       type: String,
       default: ""
+    },
+    validation: {
+      type: Object,
+      default: () => ({
+        isRequired: false,
+        isValid: true,
+        isInvalid: false,
+        isDirty: false,
+        showErrors: false
+      })
+    },
+    errors: {
+      type: Array,
+      default: () => []
     }
-  }
+  },
+  methods: {}
 };
 </script>
+<style lang="scss">
+@import "@/assets/form.scss";
+</style>

@@ -53,12 +53,12 @@ const mapComponentbyType = {
 };
 
 export default {
-  components: {
-    EqInput,
-    EqSelect,
-    AjaxButton
-  },
-  mixins: [validation],
+  // components: {
+  //   EqInput,
+  //   EqSelect,
+  //   AjaxButton
+  // },
+  // mixins: [validation],
   props: {
     fields: {
       type: Array,

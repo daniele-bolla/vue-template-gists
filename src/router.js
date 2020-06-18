@@ -3,35 +3,22 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-import Login from "./pages/Login.vue";
-import Films from "./pages/Films.vue";
-import Planets from "./pages/Planets.vue";
+import Home from "@/views/Home.vue";
 
 const routes = [
   {
-    path: "/login",
-    component: Login,
-    name: "Login"
+    path: "/",
+    name: "Home",
+    component: Home
   },
   {
-    path: "/films",
-    component: Films,
-    name: "Films",
-    meta: {
-      withAuth: true
-    }
-  },
-  {
-    path: "/films/:id/planets",
-    component: Planets,
-    name: "Planets",
-    meta: {
-      withAuth: true
-    }
+    path: "/about",
+    name: "About",
+    component: () => import(/* webpackChunkName: "about" */ "@/views/About.vue")
   },
   {
     path: "*",
-    redirect: "/login"
+    redirect: "/home"
   }
 ];
 
