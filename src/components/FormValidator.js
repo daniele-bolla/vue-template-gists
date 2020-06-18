@@ -4,13 +4,24 @@ const isPostCode = val => /^([a-z0-9]\s*){5,7}$/i.test(val);
 
 const isEmpty = val => isNil(val) || val === "";
 
+const isEmail = val => {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(val).toLowerCase());
+};
+
 const validationRules = {
-  isPostCode: {
+  postcode: {
     check(val) {
       return isPostCode(val);
     },
     error:
       "Enter a valid postal code with 5 to 7 characters (spaces are allowed)."
+  },
+  email: {
+    check(val) {
+      return isEmail(val);
+    },
+    error: "Enter a valid email."
   },
   required: {
     check(val) {
@@ -34,7 +45,7 @@ export default {
       type: Function,
       default: () => function() {}
     },
-    onSubmit: {
+    send: {
       type: Function,
       default: () => function() {}
     }
@@ -98,20 +109,20 @@ export default {
     isDirty(fieldName) {
       this.scheme[fieldName].isDirty = true;
     },
-    submit() {
+    validateAndSubmit() {
       this.beforeValidate(this.formModels);
-      if (!this.validate()) {
-        return;
-      }
+
+      Object.keys(this.scheme).forEach(fieldName => {
+        this.scheme[fieldName].isDirty = true;
+      });
       if (!this.isValid) {
+        // eslint-disable-next-line no-debugger
+        debugger;
         return;
       }
-      if (this.hasNoChanges) {
-        return;
-      }
-      if (!this.validate() || !this.isValid || this.hasNoChanges) {
-        return;
-      }
+      // if (this.hasNoChanges) {
+      //   return;
+      // }
       return this.send(this.formModels);
     }
   },

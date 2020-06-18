@@ -33,6 +33,7 @@
         :value="value"
         id="name"
         name="name"
+        :autocomplete="autocomplete"
         :aria-described="`describe-${name}`"
         :aria-invalid="validation.isInvalid"
         :aria-required="validation.isRequired"
@@ -80,7 +81,7 @@ export default {
     },
     autocomplete: {
       type: String,
-      default: ""
+      default: "off"
     },
     validation: {
       type: Object,

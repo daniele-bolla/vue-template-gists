@@ -9,9 +9,21 @@
     }"
     :scheme="scheme"
     :form-models="formData"
-    :send="submit"
+    :send="onSubmit"
   >
     <form class="form" @submit.prevent="validateAndSubmit" novalidate>
+      <base-input
+        class="form__block"
+        :label="scheme.name.label"
+        :name="scheme.name.name"
+        @blur="isDirty('name')"
+        v-model.lazy="formModels.name"
+        :id="scheme.name.name"
+        type="text"
+        :validation="fieldsValidationMap.name"
+        :errors="fieldsValidationMap.name.errors"
+        autocomplete="name"
+      />
       <base-input
         class="form__block"
         :label="scheme.lastname.label"
@@ -22,7 +34,20 @@
         type="text"
         :validation="fieldsValidationMap.lastname"
         :errors="fieldsValidationMap.lastname.errors"
-      ></base-input>
+      />
+
+      <base-input
+        class="form__block"
+        :label="scheme.email.label"
+        :name="scheme.email.name"
+        @blur="isDirty('email')"
+        v-model.lazy="formModels.email"
+        :id="scheme.email.name"
+        type="email"
+        :validation="fieldsValidationMap.email"
+        :errors="fieldsValidationMap.email.errors"
+        autocomplete="email"
+      />
 
       <base-input
         class="form__block"
@@ -35,10 +60,36 @@
         :post-addon="true"
         :validation="fieldsValidationMap.postcode"
         :errors="fieldsValidationMap.postcode.errors"
+        autocomplete="postal-code"
       >
-        <base-button slot="postaddon" @click="submit">preaddon</base-button>
+        <base-button
+          slot="postaddon"
+          skin="transparent"
+          @click.prevent="() => alert(234)"
+          icon="email"
+          text="Check"
+        />
       </base-input>
-      <base-button @click="submit">Submit</base-button>
+      <base-input
+        class="form__block"
+        :label="scheme.bday.label"
+        :name="scheme.bday.name"
+        @blur="isDirty('bday')"
+        v-model.lazy="formModels.bday"
+        :id="scheme.bday.name"
+        type="date"
+        :validation="fieldsValidationMap.bday"
+        :errors="fieldsValidationMap.bday.errors"
+        autocomplete="bday"
+      />
+      <base-button
+        class="full-width text-center justify-center"
+        size="large"
+        skin="transparent"
+        type="submit"
+        icon="email"
+        text="Submit"
+      />
     </form>
   </form-validator>
 </template>
@@ -48,24 +99,8 @@
 
 import BaseInput from "@/components/BaseInput.vue";
 import BaseButton from "@/components/BaseButton.vue";
+
 import FormValidator from "@/components/FormValidator";
-const scheme = {
-  lastname: {
-    label: "Last Name",
-    isDirty: false,
-    validations: ["required"]
-  },
-  postcode: {
-    label: "Post Code",
-    isDirty: false,
-    validations: ["required", "isPostCode"]
-  },
-  bday: {
-    label: "Bitrh Day",
-    isDirty: false,
-    validations: ["required"]
-  }
-};
 
 export default {
   components: {
@@ -75,24 +110,45 @@ export default {
   },
   data() {
     return {
-      scheme,
+      scheme: {
+        name: {
+          label: "Name",
+          isDirty: false,
+          validations: ["required"]
+        },
+        lastname: {
+          label: "Last Name",
+          isDirty: false,
+          validations: ["required"]
+        },
+        email: {
+          label: "Email",
+          isDirty: false,
+          validations: ["required", "email"]
+        },
+        postcode: {
+          label: "Post Code",
+          isDirty: false,
+          validations: ["required", "postcode"]
+        },
+        bday: {
+          label: "Bitrh Day",
+          isDirty: false,
+          validations: ["required"]
+        }
+      },
       formData: {
         lastname: "",
+        name: "",
+        email: "",
         postcode: "",
         bday: ""
-      },
-      validation: {
-        isRequired: true,
-        isValid: false,
-        isInvalid: true,
-        showErrors: true
-      },
-      errors: ["This field is required"]
+      }
     };
   },
   methods: {
-    submit() {
-      alert(234);
+    onSubmit(formData) {
+      console.log(formData);
     }
   }
 };

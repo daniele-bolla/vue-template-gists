@@ -6,6 +6,7 @@
 
 <script>
 // @ is an alias to /src
+
 import BaseForm from "@/components/BaseForm.vue";
 
 export default {

@@ -11,14 +11,22 @@ export default {
 </script>
 
 <template>
-  <button :class="`btn btn--${size} btn--${skin}`" @click="$emit('click')">
-    <slot></slot>
+  <button :class="`btn btn--${size} ${classModifiers}`" @click="$emit('click')">
+    <span v-if="icon" class="btn__icon">
+      <base-icon :name="icon" />
+    </span>
+    <span class="btn__text">{{ text }}</span>
   </button>
 </template>
 
 <script>
+import BaseIcon from "@/components/BaseIcon.vue";
+
 export default {
   name: "BaseButton",
+  components: {
+    BaseIcon
+  },
   props: {
     size: {
       type: String,
@@ -28,7 +36,23 @@ export default {
     skin: {
       type: String,
       default: "primary",
-      validator: val => ["secondary", "primary", "default"].includes(val)
+      validator: val =>
+        ["secondary", "primary", "default", "transparent"].includes(val)
+    },
+    text: {
+      type: String,
+      required: true
+    },
+    icon: {
+      type: String
+    }
+  },
+  computed: {
+    classModifiers() {
+      return this.skin.split(",").reduce((classes, modifier) => {
+        classes += `btn--${modifier} `;
+        return classes;
+      }, "");
     }
   }
 };
