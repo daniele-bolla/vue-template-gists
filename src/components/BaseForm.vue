@@ -23,6 +23,21 @@
         :validation="fieldsValidationMap.lastname"
         :errors="fieldsValidationMap.lastname.errors"
       ></base-input>
+
+      <base-input
+        class="form__block"
+        :label="scheme.postcode.label"
+        :name="scheme.postcode.name"
+        @blur="isDirty('postcode')"
+        v-model.lazy="formModels.postcode"
+        :id="scheme.postcode.name"
+        type="text"
+        :post-addon="true"
+        :validation="fieldsValidationMap.postcode"
+        :errors="fieldsValidationMap.postcode.errors"
+      >
+        <base-button slot="postaddon" @click="submit">preaddon</base-button>
+      </base-input>
       <base-button @click="submit">Submit</base-button>
     </form>
   </form-validator>

@@ -13,19 +13,34 @@
         >&check;</span
       >
     </label>
-    <input
-      class="form__element"
-      :type="type"
-      @blur="$emit('blur')"
-      @input="$emit('input', $event.target.value)"
-      :value="value"
-      :autocomplete="autocomplete"
-      id="name"
-      name="name"
-      :aria-described="`describe-${name}`"
-      :aria-invalid="validation.isInvalid"
-      :aria-required="validation.isRequired"
-    />
+    <div
+      :class="{
+        'input-group': preAddon || postAddon,
+        'input--has-error': validation.showErrors
+      }"
+    >
+      <slot v-if="preAddon" class="input-group__prepend" name="preaddon">
+      </slot>
+
+      <input
+        class="input"
+        :class="{
+          'input-group__input': preAddon || postAddon
+        }"
+        :type="type"
+        @blur="$emit('blur')"
+        @input="$emit('input', $event.target.value)"
+        :value="value"
+        id="name"
+        name="name"
+        :aria-described="`describe-${name}`"
+        :aria-invalid="validation.isInvalid"
+        :aria-required="validation.isRequired"
+      />
+      <div v-if="postAddon" class="input-group__append">
+        <slot name="postaddon"> </slot>
+      </div>
+    </div>
     <base-alert
       type="danger"
       :id="`describe-${name}`"
@@ -82,9 +97,16 @@ export default {
       default: () => []
     }
   },
-  methods: {}
+  computed: {
+    preAddon() {
+      return !!this.$slots.preaddon;
+    },
+    postAddon() {
+      return !!this.$slots.postaddon;
+    }
+  }
 };
 </script>
 <style lang="scss">
-@import "@/assets/form.scss";
+@import "@/assets/input.scss";
 </style>
