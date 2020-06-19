@@ -1,20 +1,48 @@
 <template>
-  <label class="flex items-center">
+  <div class="checkbox__wrapper">
     <input
-      class="form-checkbox text-gray-800 border-gray-400 cursor-pointer"
+      class="checkbox__input"
+      :id="name"
       type="checkbox"
       :checked="value"
       @input="$emit('input', $event.target.checked)"
     />
-    <div v-if="label" class="text-sm font-semibold ml-2" v-text="label"></div>
-  </label>
+    <label :for="name" class="checkbox__label" v-text="label"></label>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    value: Boolean,
-    label: String
+    value: {
+      type: Boolean,
+      default: false
+    },
+    label: {
+      type: String,
+      default: ""
+    },
+    name: {
+      type: String,
+      default: ""
+    },
+    validation: {
+      type: Object,
+      default: () => ({
+        isRequired: false,
+        isValid: true,
+        isInvalid: false,
+        isDirty: false,
+        showErrors: false
+      })
+    },
+    errors: {
+      type: Array,
+      default: () => []
+    }
   }
 };
 </script>
+<style lang="scss">
+@import "@/assets/checkbox.scss";
+</style>

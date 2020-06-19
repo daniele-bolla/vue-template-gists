@@ -19,8 +19,9 @@
         'input--has-error': validation.showErrors
       }"
     >
-      <slot v-if="preAddon" class="input-group__prepend" name="preaddon">
-      </slot>
+      <div v-if="preAddon" class="input-group__prepend">
+        <slot name="preaddon"> </slot>
+      </div>
 
       <input
         class="input"

@@ -1,5 +1,5 @@
 <template>
-  <i class="icon" aria-hidden="true">
+  <i class="icon__svg__wrapper" aria-hidden="true">
     <svg
       fill="none"
       stroke-linecap="round"
@@ -37,7 +37,7 @@ export default {
 };
 </script>
 <style>
-.icon {
+.icon__svg__wrapper {
   color: inherit;
   display: block;
   height: 100%;

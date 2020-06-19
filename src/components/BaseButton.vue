@@ -11,7 +11,7 @@ export default {
 </script>
 
 <template>
-  <button :class="`btn btn--${size} ${classModifiers}`" @click="$emit('click')">
+  <button :class="`btn btn--${size} btn--${skin}`" @click="$emit('click')">
     <span v-if="icon" class="btn__icon">
       <base-icon :name="icon" />
     </span>

@@ -25,7 +25,7 @@ const validationRules = {
   },
   required: {
     check(val) {
-      return !isEmpty(val);
+      return !isEmpty(val) || val;
     },
     error: "This field is required."
   }

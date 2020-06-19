@@ -47,7 +47,20 @@
         :validation="fieldsValidationMap.email"
         :errors="fieldsValidationMap.email.errors"
         autocomplete="email"
-      />
+      >
+        <span
+          slot="postaddon"
+          style="display: inline-flex; padding: 0.3em 0.6em;"
+        >
+          <base-icon name="email"></base-icon>
+        </span>
+        <span
+          slot="preaddon"
+          style="display: inline-flex; padding: 0.3em 0.6em;"
+        >
+          <base-icon name="email"></base-icon>
+        </span>
+      </base-input>
 
       <base-input
         class="form__block"
@@ -82,6 +95,13 @@
         :errors="fieldsValidationMap.bday.errors"
         autocomplete="bday"
       />
+      <base-checkbox
+        name="terms"
+        v-model="formModels.terms"
+        label="Accept our terms and privacy conditions"
+        class="form__block"
+      >
+      </base-checkbox>
       <base-button
         class="full-width text-center justify-center"
         size="large"
@@ -99,6 +119,8 @@
 
 import BaseInput from "@/components/BaseInput.vue";
 import BaseButton from "@/components/BaseButton.vue";
+import BaseCheckbox from "@/components/BaseCheckbox.vue";
+import BaseIcon from "@/components/BaseIcon.vue";
 
 import FormValidator from "@/components/FormValidator";
 
@@ -106,7 +128,9 @@ export default {
   components: {
     BaseInput,
     BaseButton,
-    FormValidator
+    FormValidator,
+    BaseCheckbox,
+    BaseIcon
   },
   data() {
     return {
@@ -135,6 +159,11 @@ export default {
           label: "Bitrh Day",
           isDirty: false,
           validations: ["required"]
+        },
+        terms: {
+          label: "Accept our terms and privacy conditions",
+          isDirty: false,
+          validations: ["required"]
         }
       },
       formData: {
@@ -142,7 +171,8 @@ export default {
         name: "",
         email: "",
         postcode: "",
-        bday: ""
+        bday: "",
+        terms: false
       }
     };
   },

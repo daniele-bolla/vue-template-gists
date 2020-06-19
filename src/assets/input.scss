@@ -31,7 +31,7 @@
   border-bottom-right-radius: 0;
 }
 
-.input-group .input-group__append > * , .input-group .input-group__append > * {
+.input-group .input-group__append > * , .input-group .input-group__prepend > * {
   height: 100%;
   border: 0.1rem solid $border-input;
   border-radius: 0.2rem;
