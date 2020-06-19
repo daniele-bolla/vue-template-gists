@@ -33,17 +33,17 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.withAuth)) {
-    const logged = JSON.parse(localStorage.getItem("logged"));
-    if (logged && from.path !== "login") {
-      next();
-      return;
-    }
-    next("/login");
-    return;
-  }
-  next();
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.withAuth)) {
+//     const logged = JSON.parse(localStorage.getItem("logged"));
+//     if (logged && from.path !== "login") {
+//       next();
+//       return;
+//     }
+//     next("/login");
+//     return;
+//   }
+//   next();
+// });
 
 export default router;

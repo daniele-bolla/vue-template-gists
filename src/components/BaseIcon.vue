@@ -41,7 +41,7 @@ export default {
   color: inherit;
   display: block;
   height: 100%;
-  padding: 0 0.8rem 0 1rem;
+  padding: 0.8em;
   position: relative;
 }
 .icon__svg {
