@@ -11,11 +11,15 @@ export default {
 </script>
 
 <template>
-  <button :class="`btn btn--${size} btn--${skin}`" @click="$emit('click')">
+  <button
+    :type="type"
+    :class="`btn btn--${size} btn--${skin}`"
+    @click="$emit('click')"
+  >
     <span v-if="icon" class="btn__icon">
       <base-icon :name="icon" />
     </span>
-    <span class="btn__text">{{ text }}</span>
+    <span v-if="text" class="btn__text">{{ text }}</span>
   </button>
 </template>
 
@@ -42,6 +46,10 @@ export default {
     text: {
       type: String,
       required: true
+    },
+    type: {
+      type: String,
+      required: "button"
     },
     icon: {
       type: String

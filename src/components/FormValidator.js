@@ -106,7 +106,6 @@ export default {
       const el = document.getElementById(id);
       el && el.scrollIntoView();
       el && window.scrollBy(0, -50);
-      console.log(el);
     },
     createInputSchemeFromFields() {
       return Object.keys(this.scheme)

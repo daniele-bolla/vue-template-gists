@@ -60,6 +60,16 @@
           <base-icon name="email"></base-icon>
         </span>
       </base-input>
+      <base-password
+        class="form__block"
+        :label="scheme.password.label"
+        :name="scheme.password.name"
+        @blur="isDirty('password')"
+        v-model.lazy="formModels.password"
+        :validation="fieldsValidationMap.password"
+        :errors="fieldsValidationMap.password.errors"
+      >
+      </base-password>
 
       <base-input
         class="form__block"
@@ -78,6 +88,7 @@
           skin="transparent"
           @click.prevent="() => alert(234)"
           icon="email"
+          type="button"
           text="Check"
         />
       </base-input>
@@ -117,6 +128,7 @@
 /* eslint-disable no-debugger */
 
 import BaseInput from "@/components/BaseInput.vue";
+import BasePassword from "@/components/BasePassword.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseCheckbox from "@/components/BaseCheckbox.vue";
 import BaseIcon from "@/components/BaseIcon.vue";
@@ -126,6 +138,7 @@ import FormValidator from "@/components/FormValidator";
 export default {
   components: {
     BaseInput,
+    BasePassword,
     BaseButton,
     FormValidator,
     BaseCheckbox,
@@ -146,11 +159,18 @@ export default {
           isDirty: false,
           validations: ["required"]
         },
+
         email: {
           label: "Email",
           name: "email",
           isDirty: false,
           validations: ["required", "email"]
+        },
+        password: {
+          label: "password",
+          name: "password",
+          isDirty: false,
+          validations: ["required"]
         },
         postcode: {
           label: "Post Code",
@@ -162,6 +182,7 @@ export default {
           label: "Bitrh Day",
           name: "bday",
           isDirty: false,
+          checkIf: () => false,
           validations: ["required"]
         },
         terms: {
@@ -172,9 +193,10 @@ export default {
         }
       },
       formData: {
-        lastname: "",
         name: "",
+        lastname: "",
         email: "",
+        password: "",
         postcode: "",
         bday: "",
         terms: false

@@ -7,27 +7,32 @@
     :name="name"
     :placeholder="placeholder"
     autocomplete="new-password"
-    :post-addon="true"
+    :label="label"
+    :validation="validation"
+    @blur="$emit('blur')"
     @input="newValue => $emit('input', newValue)"
   >
     <template slot="postaddon">
-      <button
+      <base-button
+        skin="transparent"
         class="toggle-password"
-        role="button"
-        @click.prevent="togglePassword"
+        :icon="iconEye"
+        type="button"
+        @click="togglePassword"
       >
-        <i class="fa fa-eye"></i>
-      </button>
+      </base-button>
     </template>
   </base-input>
 </template>
 
 <script>
 import BaseInput from "./BaseInput";
+import BaseButton from "./BaseButton";
 
 export default {
   components: {
-    BaseInput
+    BaseInput,
+    BaseButton
   },
   props: {
     id: {
@@ -36,26 +41,40 @@ export default {
     name: {
       type: String
     },
-    placeholder: {
+    label: {
       type: String
     },
     value: {
-      type: [Number, String],
-      default: ""
+      type: String
+    },
+    placeholder: {
+      type: String
+    },
+    validation: {
+      type: Object,
+      default: () => ({
+        isRequired: false,
+        isValid: true,
+        isInvalid: false,
+        isDirty: false,
+        showErrors: false
+      })
     },
     errors: {
-      type: [Array, Object],
+      type: Array,
       default: () => []
     }
   },
   data() {
     return {
-      passwordType: "password"
+      passwordType: "password",
+      iconEye: "eyeOff"
     };
   },
   methods: {
     togglePassword() {
       this.passwordType = this.passwordType == "password" ? "text" : "password";
+      this.iconEye = this.iconEye == "eye" ? "eyeOff" : "eye";
     }
   }
 };
