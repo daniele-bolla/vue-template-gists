@@ -8,11 +8,26 @@
       @input="$emit('input', $event.target.checked)"
     />
     <label :for="name" class="checkbox__label" v-text="label"></label>
+    <base-alert
+      type="danger"
+      :id="`describe-${name}`"
+      v-if="validation.showErrors"
+    >
+      <li v-for="(item, index) in errors" :key="index">
+        {{ item }}
+      </li>
+    </base-alert>
   </div>
 </template>
 
 <script>
+import BaseAlert from "@/components/BaseAlert.vue";
+
 export default {
+  name: "BaseCheckbox",
+  components: {
+    BaseAlert
+  },
   props: {
     value: {
       type: Boolean,

@@ -12,29 +12,29 @@
     :send="onSubmit"
   >
     <form class="form" @submit.prevent="validateAndSubmit" novalidate>
-      <base-input
-        class="form__block"
-        :label="scheme.name.label"
-        :name="scheme.name.name"
-        @blur="isDirty('name')"
-        v-model.lazy="formModels.name"
-        :id="scheme.name.name"
-        type="text"
-        :validation="fieldsValidationMap.name"
-        :errors="fieldsValidationMap.name.errors"
-        autocomplete="name"
-      />
-      <base-input
-        class="form__block"
-        :label="scheme.lastname.label"
-        :name="scheme.lastname.name"
-        @blur="isDirty('lastname')"
-        v-model.lazy="formModels.lastname"
-        :id="scheme.lastname.name"
-        type="text"
-        :validation="fieldsValidationMap.lastname"
-        :errors="fieldsValidationMap.lastname.errors"
-      />
+      <div class="form__blocks--inline">
+        <base-input
+          class="form__block"
+          :label="scheme.name.label"
+          :name="scheme.name.name"
+          @blur="isDirty('name')"
+          v-model.lazy="formModels.name"
+          type="text"
+          :validation="fieldsValidationMap.name"
+          :errors="fieldsValidationMap.name.errors"
+          autocomplete="name"
+        />
+        <base-input
+          class="form__block"
+          :label="scheme.lastname.label"
+          :name="scheme.lastname.name"
+          @blur="isDirty('lastname')"
+          v-model.lazy="formModels.lastname"
+          type="text"
+          :validation="fieldsValidationMap.lastname"
+          :errors="fieldsValidationMap.lastname.errors"
+        />
+      </div>
 
       <base-input
         class="form__block"
@@ -42,7 +42,6 @@
         :name="scheme.email.name"
         @blur="isDirty('email')"
         v-model.lazy="formModels.email"
-        :id="scheme.email.name"
         type="email"
         :validation="fieldsValidationMap.email"
         :errors="fieldsValidationMap.email.errors"
@@ -68,7 +67,6 @@
         :name="scheme.postcode.name"
         @blur="isDirty('postcode')"
         v-model.lazy="formModels.postcode"
-        :id="scheme.postcode.name"
         type="text"
         :post-addon="true"
         :validation="fieldsValidationMap.postcode"
@@ -89,7 +87,6 @@
         :name="scheme.bday.name"
         @blur="isDirty('bday')"
         v-model.lazy="formModels.bday"
-        :id="scheme.bday.name"
         type="date"
         :validation="fieldsValidationMap.bday"
         :errors="fieldsValidationMap.bday.errors"
@@ -98,6 +95,8 @@
       <base-checkbox
         name="terms"
         v-model="formModels.terms"
+        :validation="fieldsValidationMap.terms"
+        :errors="fieldsValidationMap.terms.errors"
         label="Accept our terms and privacy conditions"
         class="form__block"
       >
@@ -137,33 +136,39 @@ export default {
       scheme: {
         name: {
           label: "Name",
+          name: "name",
           isDirty: false,
           validations: ["required"]
         },
         lastname: {
           label: "Last Name",
+          name: "lastname",
           isDirty: false,
           validations: ["required"]
         },
         email: {
           label: "Email",
+          name: "email",
           isDirty: false,
           validations: ["required", "email"]
         },
         postcode: {
           label: "Post Code",
+          name: "postcode",
           isDirty: false,
           validations: ["required", "postcode"]
         },
         bday: {
           label: "Bitrh Day",
+          name: "bday",
           isDirty: false,
           validations: ["required"]
         },
         terms: {
           label: "Accept our terms and privacy conditions",
+          name: "terms",
           isDirty: false,
-          validations: ["required"]
+          validations: ["checked"]
         }
       },
       formData: {

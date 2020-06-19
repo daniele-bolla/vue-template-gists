@@ -28,6 +28,12 @@ const validationRules = {
       return !isEmpty(val) || val;
     },
     error: "This field is required."
+  },
+  checked: {
+    check(val) {
+      return val;
+    },
+    error: "Check this field"
   }
 };
 
@@ -63,30 +69,33 @@ export default {
       );
     },
     fieldsValidationMap() {
-      return Object.keys(this.formModels).reduce((acc, fieldName) => {
-        const inputScheme = this.scheme[fieldName];
-        const inputValidations = inputScheme.validations;
+      return Object.keys(this.formModels)
+        .filter(({ checkIf }) => typeof checkIf === "undefined" || checkIf)
+        .reduce((acc, fieldName) => {
+          const inputScheme = this.scheme[fieldName];
+          const inputValidations = inputScheme.validations;
 
-        const invalidRules = inputValidations.filter(rule => {
-          return !validationRules[rule].check(this.formModels[fieldName]);
-        });
+          const invalidRules = inputValidations.filter(rule => {
+            return !validationRules[rule].check(this.formModels[fieldName]);
+          });
 
-        const errors = invalidRules.map(rule => {
-          return validationRules[rule].error;
-        });
+          const errors = invalidRules.map(rule => {
+            return validationRules[rule].error;
+          });
 
-        const mapInput = {
-          isDirty: inputScheme.isDirty,
-          isValid: invalidRules.length == 0,
-          isInvalid: invalidRules.length > 0,
-          isRequired: !!inputValidations.find(rule => rule == "required"),
-          showErrors: inputScheme.isDirty && invalidRules.length > 0,
-          errors: errors.length > 0 ? errors : undefined
-        };
+          const mapInput = {
+            name: fieldName,
+            isDirty: inputScheme.isDirty,
+            isValid: invalidRules.length == 0,
+            isInvalid: invalidRules.length > 0,
+            isRequired: !!inputValidations.find(rule => rule == "required"),
+            showErrors: inputScheme.isDirty && invalidRules.length > 0,
+            errors: errors.length > 0 ? errors : undefined
+          };
 
-        acc[fieldName] = mapInput;
-        return acc;
-      }, {});
+          acc[fieldName] = mapInput;
+          return acc;
+        }, {});
     },
     hasNoChanges() {
       // return isEqual(this.formModels, this.initData);
@@ -97,6 +106,7 @@ export default {
       const el = document.getElementById(id);
       el && el.scrollIntoView();
       el && window.scrollBy(0, -50);
+      console.log(el);
     },
     createInputSchemeFromFields() {
       return Object.keys(this.scheme)
@@ -105,6 +115,17 @@ export default {
           return acc;
         }, [])
         .flat(2);
+    },
+    runValidation() {
+      const invalidInputs = Object.values(this.fieldsValidationMap).filter(
+        ({ isInvalid }) => {
+          return isInvalid;
+        }
+      );
+      const { 0: { name: firstEl } = {} } = invalidInputs;
+      if (firstEl) {
+        this.scrollIntoView(firstEl);
+      }
     },
     isDirty(fieldName) {
       this.scheme[fieldName].isDirty = true;
@@ -116,8 +137,7 @@ export default {
         this.scheme[fieldName].isDirty = true;
       });
       if (!this.isValid) {
-        // eslint-disable-next-line no-debugger
-        debugger;
+        this.runValidation();
         return;
       }
       // if (this.hasNoChanges) {

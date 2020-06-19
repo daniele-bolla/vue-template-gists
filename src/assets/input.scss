@@ -51,7 +51,8 @@
 }
 
 .input--has-error .input, .input--has-error .input-group__append , 
-.input-group.input--has-error .input-group__append > * {
+.input-group.input--has-error .input-group__append > *, .input--has-error .input-group__prepend , 
+.input-group.input--has-error .input-group__prepend > * {
   color: $alert-danger-text;
   border-color: $alert-danger-border;
   background-color: $alert-danger-bg;
