@@ -182,7 +182,7 @@ export default {
           label: "Bitrh Day",
           name: "bday",
           isDirty: false,
-          checkIf: () => false,
+          checkIf: () => this.formData.terms,
           validations: ["required"]
         },
         terms: {

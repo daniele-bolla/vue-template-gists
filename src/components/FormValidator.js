@@ -69,33 +69,34 @@ export default {
       );
     },
     fieldsValidationMap() {
-      return Object.keys(this.formModels)
-        .filter(({ checkIf }) => typeof checkIf === "undefined" || checkIf)
-        .reduce((acc, fieldName) => {
-          const inputScheme = this.scheme[fieldName];
-          const inputValidations = inputScheme.validations;
+      return Object.keys(this.formModels).reduce((acc, fieldName) => {
+        const inputScheme = this.scheme[fieldName];
 
-          const invalidRules = inputValidations.filter(rule => {
-            return !validationRules[rule].check(this.formModels[fieldName]);
-          });
+        const toCheck = inputScheme.checkIf ? inputScheme.checkIf() : true;
 
-          const errors = invalidRules.map(rule => {
-            return validationRules[rule].error;
-          });
+        const inputValidations = toCheck ? inputScheme.validations : [];
 
-          const mapInput = {
-            name: fieldName,
-            isDirty: inputScheme.isDirty,
-            isValid: invalidRules.length == 0,
-            isInvalid: invalidRules.length > 0,
-            isRequired: !!inputValidations.find(rule => rule == "required"),
-            showErrors: inputScheme.isDirty && invalidRules.length > 0,
-            errors: errors.length > 0 ? errors : undefined
-          };
+        const invalidRules = inputValidations.filter(rule => {
+          return !validationRules[rule].check(this.formModels[fieldName]);
+        });
 
-          acc[fieldName] = mapInput;
-          return acc;
-        }, {});
+        const errors = invalidRules.map(rule => {
+          return validationRules[rule].error;
+        });
+
+        const mapInput = {
+          name: fieldName,
+          isDirty: inputScheme.isDirty,
+          isValid: invalidRules.length == 0,
+          isInvalid: invalidRules.length > 0,
+          isRequired: !!inputValidations.find(rule => rule == "required"),
+          showErrors: inputScheme.isDirty && invalidRules.length > 0,
+          errors: errors.length > 0 ? errors : undefined
+        };
+
+        acc[fieldName] = mapInput;
+        return acc;
+      }, {});
     },
     hasNoChanges() {
       // return isEqual(this.formModels, this.initData);
