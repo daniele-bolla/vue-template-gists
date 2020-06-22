@@ -26,9 +26,15 @@
 }
 
 .input-group .input-group__input {
-  border-right: 0;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  > .input-group__input{
+    &:not(:last-child) {  border-right: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0; }
+    &:not(:first-child) {   border-left: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0; }
+  }
+
 }
 
 .input-group .input-group__append > * , .input-group .input-group__prepend > * {
@@ -41,13 +47,14 @@
 .input-group .input-group__append > *  {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  margin-left: -1px;
+  margin-left: -0.1rem;
 }
 
 .input-group .input-group__prepend > * {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  margin-right: -1px;
+  margin-right: -0.1rem;
+
 }
 
 .input--has-error .input, .input--has-error .input-group__append , 
